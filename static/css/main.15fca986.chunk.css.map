@@ -1,0 +1,1 @@
+{"version":3,"sources":["C:/Users/Mayank Raghuvanshi/OneDrive/Desktop/ide/client/src/App.css"],"names":[],"mappings":"AAEA,KACE,QAAU,CACV,SACF","file":"main.15fca986.chunk.css","sourcesContent":["@import '~antd/dist/antd.css';\n\nbody{\n  margin : 0;\n  padding : 0;\n}"]}
