@@ -14,12 +14,11 @@ import {connect} from 'react-redux';
 
 const EditorComponent = (props) => {
     const {editorOption , editorMode} = props;
-    console.log(editorOption)
-    return <div>
+    return <div style={{margin : "2px" , width : "70%"}}>
             <AceEditor
             name = "defaultCode"
-            width = "80%"
-            height = "100vh"
+            width = "100%"
+            height = "80vh"
             mode={editorMode.name}
             theme={editorOption.theme}
             fontSize = {editorOption.fontSize}

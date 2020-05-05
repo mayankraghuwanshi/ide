@@ -4,7 +4,7 @@ const Option = Select.Option;
 const SelectComponent = ({name , options , defaultValue ,width , onChange})=>{
 
     const style = {
-        margin : "0 2 0 2",
+        margin : "0 2px 0 2px",
         borderRadius : "0",
         border : "none",
         width : `${width}px`

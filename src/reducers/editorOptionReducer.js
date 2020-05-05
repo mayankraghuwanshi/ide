@@ -1,4 +1,11 @@
 import CONSTANT from "../constants";
+import {
+    CHANGE_FONT,
+    CHANGE_OPS_TO_DEFAULT,
+    CHANGE_SHOW_GUTTER,
+    CHANGE_THEME,
+    CHANGE_WIDTH
+} from '../actionReducerConstants';
 
 const initialState = {
     theme : CONSTANT.DEFAULT_THEME,
@@ -10,24 +17,25 @@ const initialState = {
 
 export default (state = initialState , {payload , type})=>{
     switch (type) {
-        case "CHANGE_THEME" : {
+        case CHANGE_THEME : {
             return {
                 ...state,
                 theme : payload
             }
         }
-        case "CHANGE_FONT" : return {
+        case CHANGE_FONT : return {
             ...state,
             fontSize: payload
         }
-        case "CHANGE_SHOW_GUTTER" : return {
+        case CHANGE_SHOW_GUTTER: return {
             ...state,
-            showGutter: payload
+            showGutter: !state.showGutter
         }
-        case "CHANGE_WIDTH" : return {
+        case CHANGE_WIDTH : return {
             ...state,
             width : payload
         }
+        case CHANGE_OPS_TO_DEFAULT : return initialState
         default : return state;
     }
 }

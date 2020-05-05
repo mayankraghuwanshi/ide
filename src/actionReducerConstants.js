@@ -1,0 +1,9 @@
+export const CHANGE_THEME = "CHANGE_THEME";
+export const CHANGE_FONT = "CHANGE_FONT";
+export const CHANGE_LANGUAGE = "CHANGE_LANGUAGE";
+export const JAVA = "java";
+export const PYTHON = "python";
+export const JAVASCRIPT = "javascript";
+export const CHANGE_SHOW_GUTTER = "CHANGE_SHOW_GUTTER";
+export const CHANGE_WIDTH = "CHANGE_WIDTH";
+export const CHANGE_OPS_TO_DEFAULT = "CHANGE_OPS_TO_DEFAULT";
