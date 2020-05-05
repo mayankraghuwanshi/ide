@@ -1,20 +1,26 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Select from './SelectComponent';
 import {connect} from "react-redux";
 import {changeThemeAction , changeFontAction ,changeShowGutterAction , changeWidthAction , changeOpsToDefaultAction} from "../actions/editorOptionAction"
 import {changeLanguageAction} from "../actions/editorModeAction";
 import {Button} from "antd";
 import {PoweroffOutlined} from '@ant-design/icons';
+import {executeCodeAction, executeSingleModeAction} from "../actions/editorOperationAction";
 
 const EditorOpsComponent=(props)=>{
-    const {editorOption , editorMode} = props;
+    const {editorOption , editorMode , socket , room} = props;
     const {
             changeThemeAction ,
             changeFontAction ,
             changeLanguageAction ,
-            changeOpsToDefaultAction
+            changeOpsToDefaultAction,
+            executeCodeAction,
+            executeSingleModeAction
           } = props;
 
+    const handleExecuteButton=()=>{
+        executeSingleModeAction(editorMode);
+    }
 
     return (
         <div style={{margin : "2px"}}>
@@ -43,7 +49,7 @@ const EditorOpsComponent=(props)=>{
                 type = "primary"
                 style = {{backgroundColor : "green" ,border  : "none" , margin : "0 2px 0 2px"}}
                 icon = {<PoweroffOutlined/>}
-                onClick = {()=>null}
+                onClick = {()=>handleExecuteButton()}
                 loading = {false}
             >Run</Button>
             <Button
@@ -147,7 +153,9 @@ const fontOptions = [
 
 const mapStateToProps = (state)=>({
     editorOption: state.editorOption,
-    editorMode : state.editorMode
+    editorMode : state.editorMode,
+    socket : state.socket,
+    room : state.room
 
 })
 
@@ -157,5 +165,8 @@ export default connect(mapStateToProps ,
         changeThemeAction ,
         changeFontAction ,
         changeShowGutterAction ,
-        changeOpsToDefaultAction
+        changeOpsToDefaultAction,
+        executeCodeAction,
+        executeSingleModeAction
+
     })(EditorOpsComponent)

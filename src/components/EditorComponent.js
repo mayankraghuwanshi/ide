@@ -10,10 +10,13 @@ import 'ace-builds/src-noconflict/theme-solarized_dark';
 import 'ace-builds/src-noconflict/theme-solarized_light';
 
 import {connect} from 'react-redux';
+import {editorCodeOnChangeAction} from "../actions/editorModeAction";
 
 
 const EditorComponent = (props) => {
     const {editorOption , editorMode} = props;
+    const {editorCodeOnChangeAction} = props;
+
     return <div style={{margin : "2px" , width : "70%"}}>
             <AceEditor
             name = "defaultCode"
@@ -25,7 +28,7 @@ const EditorComponent = (props) => {
             showGuttet ={editorOption.shorthand}
             placeholder = {editorOption.placeholder}
             value = {editorMode.code}
-            onChange={()=>null}
+            onChange={editorCodeOnChangeAction}
             setOptions={{
                 enableBasicAutocompletion: true,
                 enableLiveAutocompletion: true,
@@ -44,4 +47,4 @@ const mapStateToProps = (state) => ({
     editorMode : state.editorMode
 })
 
-export default connect(mapStateToProps)(EditorComponent)
+export default connect(mapStateToProps , {editorCodeOnChangeAction})(EditorComponent)

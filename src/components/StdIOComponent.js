@@ -12,14 +12,19 @@ const style = {
 }
 
 
-const StdIO = (props)=>{
+const StdIO = (props) => {
     const {editorMode} = props;
+    const output = editorMode.stderr.length>0 ? editorMode.stderr : editorMode.stdout;
+    const error = editorMode.stderr.length>0 ? true : false;
+    const outputBoxStyle = {
+        color : error?"red":"black",
+    }
 
     return <div style={style}>
         <label for = "stdin"><b>Input</b></label>
-        <TextArea id="stdin" rows={9} value={editorMode.stdin}/>
+        <TextArea id="stdin" rows={9} value={editorMode.stdin} />
         <label for = "stdout"><b>Output</b></label>
-        <TextArea id="stdout" rows={9} value={editorMode.stdout} disabled={true}/>
+        <TextArea id="stdout" rows={9} value={output} style={outputBoxStyle} disabled={true}/>
     </div>
 }
 

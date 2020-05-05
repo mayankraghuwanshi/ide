@@ -9,6 +9,7 @@ const MODES = {
         ,
         stdin : "",
         stdout : "",
+        stderr : "",
 
     },
     python : {
@@ -16,6 +17,7 @@ const MODES = {
         code : `print("Hello, World!")`,
         stdin : "",
         stdout : "",
+        stderr : "",
     },
 
     javascript : {
@@ -23,6 +25,7 @@ const MODES = {
         code : `console.log("Hello, World!");`,
         stdin : "",
         stdout : "",
+        stderr : "",
     }
 }
 
