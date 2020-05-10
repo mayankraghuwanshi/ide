@@ -1,4 +1,4 @@
-import {CHANGE_BROADCAST_MODE, SET_ROOM, SET_ROOM_WITH_BROADCAST} from "../actionReducerConstants";
+import {CHANGE_BROADCAST_MODE, SET_ROOM, SET_ROOM_WITH_BROADCAST} from "../../actionReducerConstants";
 
 const initialState = {
     broadcastMode : true,

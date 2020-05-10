@@ -1,47 +1,45 @@
-import React, {useEffect, useState} from "react";
-import Select from './SelectComponent';
+import React, {useEffect} from "react";
+import Select from './util/SelectComponent';
 import {connect} from "react-redux";
-import {changeThemeAction , changeFontAction ,changeShowGutterAction , changeWidthAction , changeOpsToDefaultAction} from "../actions/editorOptionAction"
-import {changeLanguageAction} from "../actions/editorModeAction";
+import {changeThemeAction , changeFontAction ,changeShowGutterAction, changeOpsToDefaultAction} from "../actions/editorAction"
+import {changeLanguageAction} from "../actions/editorAction";
 import {Button} from "antd";
 import {PoweroffOutlined} from '@ant-design/icons';
-import {executeCodeAction, executeSingleModeAction} from "../actions/editorOperationAction";
+
 
 const EditorOpsComponent=(props)=>{
-    const {editorOption , editorMode , socket , room} = props;
+    const {editor} = props;
     const {
             changeThemeAction ,
             changeFontAction ,
             changeLanguageAction ,
             changeOpsToDefaultAction,
-            executeCodeAction,
-            executeSingleModeAction
           } = props;
 
-    const handleExecuteButton=()=>{
-        executeSingleModeAction(editorMode);
-    }
+    useEffect(()=>{
+        // console.log(editor)
+    } , [editor])
 
     return (
         <div style={{margin : "2px" }}>
             <Select
                 name = "theme"
                 options = {themeOptions}
-                defaultValue={editorOption.theme}
+                defaultValue={editor.theme}
                 // width = {130}
                 onChange={changeThemeAction}
             />
             <Select
                 name = "mode"
                 options = {modeOptions}
-                defaultValue={editorMode.name}
+                defaultValue={editor.language}
                 // width = {100}
                 onChange={changeLanguageAction}
             />
             <Select
                 name = "fontSize"
                 options={fontOptions}
-                defaultValue={editorOption.fontSize}
+                defaultValue={editor.fontSize}
                 // width={70}
                 onChange={changeFontAction}
             />
@@ -49,7 +47,7 @@ const EditorOpsComponent=(props)=>{
                 type = "primary"
                 style = {{backgroundColor : "green" ,border  : "none" , margin : "0 2px 0 2px"}}
                 icon = {<PoweroffOutlined/>}
-                onClick = {()=>handleExecuteButton()}
+                onClick = {()=>null}
                 loading = {false}
             >Run</Button>
             <Button
@@ -152,8 +150,7 @@ const fontOptions = [
     }]
 
 const mapStateToProps = (state)=>({
-    editorOption: state.editorOption,
-    editorMode : state.editorMode,
+    editor : state.editor,
     socket : state.socket,
     room : state.room
 
@@ -166,7 +163,4 @@ export default connect(mapStateToProps ,
         changeFontAction ,
         changeShowGutterAction ,
         changeOpsToDefaultAction,
-        executeCodeAction,
-        executeSingleModeAction
-
     })(EditorOpsComponent)

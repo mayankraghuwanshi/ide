@@ -1,4 +1,4 @@
-import {INITIALIZE_SOCKET, REMOVE_SOCKET} from "../actionReducerConstants";
+import {INITIALIZE_SOCKET, REMOVE_SOCKET} from "../../actionReducerConstants";
 
 
 const initialState = {

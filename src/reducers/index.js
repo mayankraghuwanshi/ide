@@ -1,14 +1,12 @@
 import {combineReducers} from "redux";
-import editorOptionReducer from './editorOptionReducer'
-import editorModeReducer from "./editorModeReducer";
-import roomReducer from "./roomReducer";
-import socketReducer from "./socketReducer";
+import roomReducer from "./reducersImpl/roomReducer";
+import socketReducer from "./reducersImpl/socketReducer";
+import editorReducer from "./reducersImpl/editorReducer";
 
 export default combineReducers({
 
-    editorMode : editorModeReducer,
-    editorOption : editorOptionReducer,
     room : roomReducer,
-    socket : socketReducer
+    socket : socketReducer,
+    editor : editorReducer
 
 })

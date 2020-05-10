@@ -10,25 +10,26 @@ import 'ace-builds/src-noconflict/theme-solarized_dark';
 import 'ace-builds/src-noconflict/theme-solarized_light';
 
 import {connect} from 'react-redux';
-import {editorCodeOnChangeAction} from "../actions/editorModeAction";
+import {changeEditorCodeAction} from "../actions/editorAction";
+
 
 
 const EditorComponent = (props) => {
-    const {editorOption , editorMode} = props;
-    const {editorCodeOnChangeAction} = props;
+    const {editor} = props;
+    const {changeEditorCodeAction} = props;
 
     return <div style={{margin : "2px" , width : "70%"}}>
             <AceEditor
             name = "defaultCode"
             width = "100%"
             height = "80vh"
-            mode={editorMode.name}
-            theme={editorOption.theme}
-            fontSize = {editorOption.fontSize}
-            showGuttet ={editorOption.shorthand}
-            placeholder = {editorOption.placeholder}
-            value = {editorMode.code}
-            onChange={editorCodeOnChangeAction}
+            mode={editor.language}
+            theme={editor.theme}
+            fontSize = {editor.fontSize}
+            showGuttet ={editor.showGutter}
+            placeholder = {editor.placeholder}
+            value = {editor.code}
+            onChange={changeEditorCodeAction}
             setOptions={{
                 enableBasicAutocompletion: true,
                 enableLiveAutocompletion: true,
@@ -43,8 +44,11 @@ const EditorComponent = (props) => {
 
 
 const mapStateToProps = (state) => ({
-    editorOption : state.editorOption,
-    editorMode : state.editorMode
+    editor : state.editor
 })
 
-export default connect(mapStateToProps , {editorCodeOnChangeAction})(EditorComponent)
+export default connect(mapStateToProps ,
+    {
+        changeEditorCodeAction
+    })
+(EditorComponent)

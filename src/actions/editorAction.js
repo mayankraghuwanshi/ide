@@ -1,15 +1,24 @@
 import {
+    CHANGE_LANGUAGE,
+    CHANGE_STDIN,
     CHANGE_THEME,
     CHANGE_FONT,
     CHANGE_WIDTH,
     CHANGE_SHOW_GUTTER,
-    CHANGE_OPS_TO_DEFAULT
+    CHANGE_OPS_TO_DEFAULT, CHANGE_CODE
 } from "../actionReducerConstants";
+
+export const changeLanguageAction =(language)=>(dispatch)=>{
+    return dispatch({
+        type : CHANGE_LANGUAGE,
+        payload : language
+    })
+}
 
 export const changeThemeAction = (themeName)=>dispatch=>{
     return dispatch({
-       type: CHANGE_THEME,
-       payload : themeName
+        type: CHANGE_THEME,
+        payload : themeName
     });
 }
 
@@ -40,3 +49,16 @@ export const changeOpsToDefaultAction=()=>dispatch=>{
     })
 }
 
+export const changeStdinAction=(stdin)=>dispatch=>{
+    return dispatch({
+        type : CHANGE_STDIN,
+        payload : stdin
+    })
+}
+
+export const changeEditorCodeAction = (code)=>dispatch=>{
+    return dispatch({
+        type : CHANGE_CODE,
+        payload : code
+    })
+}
