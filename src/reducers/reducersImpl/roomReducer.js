@@ -1,8 +1,15 @@
-import {CHANGE_BROADCAST_MODE, SET_ROOM, SET_ROOM_WITH_BROADCAST} from "../../actionReducerConstants";
+import {
+    CHANGE_BROADCAST_MODE,
+    INITIALIZE_SOCKET, REMOVE_SOCKET,
+    SET_ROOM,
+    SET_ROOM_WITH_BROADCAST
+} from "../../actionReducerConstants";
 
 const initialState = {
-    broadcastMode : true,
+    liveMode : true,
     roomId : null,
+    socket : null,
+
 }
 
 export default (state = initialState , {type , payload})=>{
@@ -18,6 +25,14 @@ export default (state = initialState , {type , payload})=>{
         case SET_ROOM_WITH_BROADCAST : return {
             roomId: payload.roomId,
             broadcastMode: payload.broadcastMode
+        }
+        case INITIALIZE_SOCKET : return {
+            ...state,
+            socket: payload
+        }
+        case REMOVE_SOCKET : return {
+            ...state,
+            socket: null
         }
         default : return state
     }

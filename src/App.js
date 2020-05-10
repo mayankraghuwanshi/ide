@@ -14,7 +14,7 @@ function App() {
                   <Route exact path="/ide">
                       <Editor/>
                   </Route>
-                  <Route exact path="/ide/:roomId">
+                  <Route exact path="/ide:roomId">
                       <LiveEditor/>
                   </Route>
               </Switch>

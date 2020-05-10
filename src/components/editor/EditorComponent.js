@@ -1,30 +1,11 @@
 import React, {useEffect} from "react";
 import EditorBodyComponent from "./EditorBodyComponent";
 import StdIOComponent from "./StdIOComponent";
-import {connect} from "react-redux";
-import io from "socket.io-client"
-import {useParams} from "react-router-dom"
-import {initialiseSocketAction} from '../../actions/socketAction'
+import {initialiseSocketAction} from '../../actions/roomAction'
 import EditorOpsComponent from "./EditorNavComponent";
 
 
-const EditorComponent = (props) => {
-    const {room} = props;
-    const {initialiseSocketAction} = props;
-    const {id} = useParams()
-    console.log(id);
-    useEffect(()=>{
-        if(room.broadcastMode){
-            const Socket = io.connect("http://localhost:4000");
-            initialiseSocketAction(Socket);
-        }
-
-
-
-
-
-
-    } , [room])
+const EditorComponent = () => {
     return <div>
         <EditorOpsComponent/>
         <div style={{display : "flex" , direction : "row" , width : "100%" , heght : "100vh"}}>
@@ -34,9 +15,6 @@ const EditorComponent = (props) => {
     </div>
 }
 
-const mapStateToProps = (state)=>({
-  room : state.room,
-  socket : state.socket
-})
 
-export default connect(mapStateToProps , {initialiseSocketAction})(EditorComponent)
+
+export default EditorComponent
