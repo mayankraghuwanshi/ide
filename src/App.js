@@ -11,10 +11,10 @@ function App() {
       <Provider store={store}>
           <Router>
               <Switch>
-                  <Route exact path="/">
+                  <Route exact path="/ide">
                       <Editor/>
                   </Route>
-                  <Route exact path="/:roomId">
+                  <Route exact path="/ide/:roomId">
                       <LiveEditor/>
                   </Route>
               </Switch>
