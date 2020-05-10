@@ -10,11 +10,11 @@ import 'ace-builds/src-noconflict/theme-solarized_dark';
 import 'ace-builds/src-noconflict/theme-solarized_light';
 
 import {connect} from 'react-redux';
-import {changeEditorCodeAction} from "../actions/editorAction";
+import {changeEditorCodeAction} from "../../actions/editorAction";
 
 
 
-const EditorComponent = (props) => {
+const EditorBodyComponent = (props) => {
     const {editor} = props;
     const {changeEditorCodeAction} = props;
 
@@ -51,4 +51,4 @@ export default connect(mapStateToProps ,
     {
         changeEditorCodeAction
     })
-(EditorComponent)
+(EditorBodyComponent)

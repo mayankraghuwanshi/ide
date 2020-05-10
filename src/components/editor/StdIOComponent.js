@@ -1,7 +1,7 @@
 import React from "react";
 import {Input} from "antd";
 import {connect} from 'react-redux';
-import {changeStdinAction} from "../actions/editorAction";
+import {changeStdinAction} from "../../actions/editorAction";
 
 
 

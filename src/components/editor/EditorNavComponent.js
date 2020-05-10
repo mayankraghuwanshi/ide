@@ -1,13 +1,13 @@
 import React, {useEffect} from "react";
-import Select from './util/SelectComponent';
+import Select from '../util/SelectComponent';
 import {connect} from "react-redux";
-import {changeThemeAction , changeFontAction ,changeShowGutterAction, changeOpsToDefaultAction} from "../actions/editorAction"
-import {changeLanguageAction} from "../actions/editorAction";
+import {changeThemeAction , changeFontAction ,changeShowGutterAction, changeOpsToDefaultAction} from "../../actions/editorAction"
+import {changeLanguageAction} from "../../actions/editorAction";
 import {Button} from "antd";
 import {PoweroffOutlined} from '@ant-design/icons';
 
 
-const EditorOpsComponent=(props)=>{
+const EditorNavComponent=(props)=>{
     const {editor} = props;
     const {
             changeThemeAction ,
@@ -163,4 +163,4 @@ export default connect(mapStateToProps ,
         changeFontAction ,
         changeShowGutterAction ,
         changeOpsToDefaultAction,
-    })(EditorOpsComponent)
+    })(EditorNavComponent)
