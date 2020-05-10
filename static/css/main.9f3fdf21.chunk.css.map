@@ -1,0 +1,1 @@
+{"version":3,"sources":["C:/Users/Mayank Raghuvanshi/OneDrive/Desktop/ide/client/src/App.css"],"names":[],"mappings":"AAEA,KACE,wBAA2B,CAC3B,QAAY,CACZ,SAEF","file":"main.9f3fdf21.chunk.css","sourcesContent":["@import '~antd/dist/antd.css';\n\nbody{\n  background-color: aliceblue;\n  margin : 0px;\n  padding : 0;\n\n}"]}
