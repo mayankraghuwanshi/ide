@@ -23,7 +23,7 @@ const EditorOpsComponent=(props)=>{
     }
 
     return (
-        <div style={{margin : "2px"}}>
+        <div style={{margin : "2px" }}>
             <Select
                 name = "theme"
                 options = {themeOptions}

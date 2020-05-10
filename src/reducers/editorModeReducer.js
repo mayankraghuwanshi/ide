@@ -5,7 +5,10 @@ import {
     EDITOR_CODE_ON_CHANGE,
     EXECUTE_CODE,
     SHOW_EXECUTION_RESULT
-} from "../actionReducerConstants";
+}
+
+from "../actionReducerConstants";
+
 const MODES = CONSTANTS.MODES
 const initialState = MODES['java']
 
@@ -26,6 +29,10 @@ export default (state = initialState , {type , payload})=> {
             ...state,
             stdout : payload.stdout,
             stderr : payload.stderr
+        }
+        case CHANGE_STDIN : return {
+            ...state,
+            stdin : payload
         }
         default :
             return state
