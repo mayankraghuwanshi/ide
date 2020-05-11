@@ -1,27 +1,28 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {initialiseSocketAction} from "../../actions/roomAction";
+import {initializeConnectionAction} from "../../actions/editorAction";
+import EditorComponent from "./EditorComponent";
+
+
 
 
 const LiveEditor = (props)=>{
     const {roomId}  = useParams();
-    const {editor} = props;
-    const {initialiseSocketAction} = props;
-    const {room} = props;
+    const [loading , setLoading] = useState(true)
+    const {initializeConnectionAction} = props;
     useEffect(()=>{
-        if(room.liveMode){
-            // const socket = io
-            // initialiseSocketAction();
-        }
+        setLoading(true);
+        initializeConnectionAction(roomId);
+        setLoading(false);
     },[roomId])
     return <div>
-        {roomId}
+        {loading ? <h1>Loading</h1> : <EditorComponent/>}
+
     </div>
 }
 
 const mapStateToProps = (state)=>({
-    editor : state.editor,
-    room : state.room
+
 })
-export default connect(mapStateToProps , {initialiseSocketAction})(LiveEditor)
+export default connect(mapStateToProps , {initializeConnectionAction})(LiveEditor)

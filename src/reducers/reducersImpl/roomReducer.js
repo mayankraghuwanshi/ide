@@ -1,5 +1,5 @@
 import {
-    CHANGE_BROADCAST_MODE,
+    CHANGE_BROADCAST_MODE, INITIALIZE_LIVE_MODE, INITIALIZE_SINGLE_MODE,
     INITIALIZE_SOCKET, REMOVE_SOCKET,
     SET_ROOM,
     SET_ROOM_WITH_BROADCAST
@@ -33,6 +33,18 @@ export default (state = initialState , {type , payload})=>{
         case REMOVE_SOCKET : return {
             ...state,
             socket: null
+        }
+        case INITIALIZE_LIVE_MODE : return {
+            ...state,
+            roomId: payload.roomId,
+            socket : payload.socket,
+            liveMode: true
+        }
+        case INITIALIZE_SINGLE_MODE : return {
+            ...state,
+            roomId: payload.roomId,
+            socket : null,
+            liveMode: false
         }
         default : return state
     }

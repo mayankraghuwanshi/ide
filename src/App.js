@@ -3,18 +3,18 @@ import './App.css';
 import store from './Store';
 import {Provider} from "react-redux";
 import Editor from './components/editor/EditorComponent'
-import { BrowserRouter as Router , Route , Switch  } from "react-router-dom";
+import { HashRouter as Router , Route , Switch  } from "react-router-dom";
 import LiveEditor from "./components/editor/LiveEditorComponent";
 
 function App() {
   return (
       <Provider store={store}>
-          <Router>
+          <Router basename={process.env.PUBLIC_URL}>
               <Switch>
-                  <Route exact path="/ide">
+                  <Route exact path="/">
                       <Editor/>
                   </Route>
-                  <Route exact path="/ide:roomId">
+                  <Route exact path="/:roomId">
                       <LiveEditor/>
                   </Route>
               </Switch>
