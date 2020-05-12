@@ -5,7 +5,9 @@ import {changeThemeAction , changeFontAction ,changeShowGutterAction, changeOpsT
 import {changeLanguageAction} from "../../actions/editorAction";
 import {Button} from "antd";
 import {PoweroffOutlined} from '@ant-design/icons';
-
+import { Input } from 'antd';
+import { Avatar } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 
 const EditorNavComponent=(props)=>{
     const {editor} = props;
@@ -21,7 +23,7 @@ const EditorNavComponent=(props)=>{
     } , [editor])
 
     return (
-        <div style={{margin : "2px" }}>
+        <div style={{ height : "40px" , padding : "4px" , backgroundColor : "#dedede", boxShadow: "0px 1px 4px 0px black" , marginBottom : "10px"}}>
             <Select
                 name = "theme"
                 options = {themeOptions}
@@ -55,6 +57,23 @@ const EditorNavComponent=(props)=>{
                 style = {{backgroundColor : "red" ,border  : "none" , margin : "0 2px 0 2px"}}
                 onClick = {changeOpsToDefaultAction}
             >Reset</Button>
+            <div style={{
+                display : "inline",
+                witdh : "auto",
+                float : "right"
+            }}>
+                {/*<Input style={{width : "200px"}} placeholder="Enter your name" />*/}
+                {/*<Button*/}
+                {/*    type = "primary"*/}
+                {/*    style = {{backgroundColor : "green" ,border  : "none" , margin : "0 2px 0 2px"}}*/}
+                {/*>Add</Button>*/}
+                <div style={{display : "inline" , lineHeight : "30px", marginRight : "5px"}}>
+                    <Avatar style={{margin : "0 2px 0 2px"}} size={25} icon={<UserOutlined />} />
+                    <h4 style={{display : "inline"}}>Mayank Raghuvanshi</h4>
+                </div>
+
+            </div>
+
         </div>
     );
 }
