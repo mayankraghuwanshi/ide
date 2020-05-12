@@ -5,7 +5,7 @@ import {
     CHANGE_FONT,
     CHANGE_WIDTH,
     CHANGE_SHOW_GUTTER,
-    CHANGE_OPS_TO_DEFAULT, CHANGE_CODE, INITIALIZE_LIVE_MODE, INITIALIZE_SINGLE_MODE
+    CHANGE_OPS_TO_DEFAULT, CHANGE_CODE, INITIALIZE_LIVE_MODE, INITIALIZE_SINGLE_MODE, INITIALIZE_SOCKET
 } from "../actionReducerConstants";
 import io from 'socket.io-client'
 import axios from 'axios';
@@ -93,4 +93,15 @@ export const initializeConnectionAction = (roomId)=>dispatch=>{
             }
         })
         .catch(error=>console.error(error));
+}
+
+export const initializeSocketAction = (socket)=>dispatch=>{
+    dispatch({
+        type : INITIALIZE_SOCKET,
+        payload : socket
+    })
+}
+
+export const initializeNewRoomAction = ()=>dispatch=>{
+
 }

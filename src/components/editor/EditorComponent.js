@@ -1,11 +1,21 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import EditorBodyComponent from "./EditorBodyComponent";
 import StdIOComponent from "./StdIOComponent";
-import {initialiseSocketAction} from '../../actions/roomAction'
 import EditorOpsComponent from "./EditorNavComponent";
+import {useParams} from 'react-router-dom'
 
+import io from 'socket.io-client'
+import {connect} from "react-redux";
+import {initializeSocketAction} from "../../actions/editorAction";
+const URL = "http://localhost:4000"
 
-const EditorComponent = () => {
+const EditorComponent = (props) => {
+    const {roomId} = useParams();
+    const {initializeSocketAction} = props;
+    console.log(roomId);
+    useEffect(()=>{
+        initializeSocketAction(io(URL));
+    } , [roomId])
     return <div>
         <EditorOpsComponent/>
         <div style={{display : "flex" , direction : "row" , width : "100%" , heght : "100vh"}}>
@@ -15,6 +25,8 @@ const EditorComponent = () => {
     </div>
 }
 
+const mapStateToProps = (state)=>({
 
+})
 
-export default EditorComponent
+export default connect(mapStateToProps , {initializeSocketAction})(EditorComponent);

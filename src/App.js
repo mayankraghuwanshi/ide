@@ -3,19 +3,19 @@ import './App.css';
 import store from './Store';
 import {Provider} from "react-redux";
 import Editor from './components/editor/EditorComponent'
-import { HashRouter as Router , Route , Switch  } from "react-router-dom";
-import LiveEditor from "./components/editor/LiveEditorComponent";
+import {HashRouter as Router, Redirect, Route, Switch} from "react-router-dom";
+
 
 function App() {
   return (
       <Provider store={store}>
-          <Router basename={process.env.PUBLIC_URL}>
+          <Router basename={""}>
               <Switch>
                   <Route exact path="/">
-                      <Editor/>
+                      <Redirect to = {`/${Date.now()}`}/>
                   </Route>
                   <Route exact path="/:roomId">
-                      <LiveEditor/>
+                      <Editor/>
                   </Route>
               </Switch>
           </Router>
