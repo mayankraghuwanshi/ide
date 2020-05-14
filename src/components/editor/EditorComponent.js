@@ -7,19 +7,20 @@ import {useParams} from 'react-router-dom'
 
 import io from 'socket.io-client'
 import {connect} from "react-redux";
-import {initializeSocketAction} from "../../actions/editorAction";
+import {syncInitialStateAction} from "../../actions/editorAction";
+import {initializeRoomAction} from "../../actions/roomAction";
 const URL = "http://localhost:4000"
 
 const EditorComponent = (props) => {
     const [loading , setLoading] = useState(true);
     const {roomId} = useParams();
-    const {initializeSocketAction} = props;
-
-    console.log(roomId);
+    const {initializeRoomAction , syncInitialStateAction} = props;
     useEffect(()=>{
         setLoading(true);
         async function fetch(setLoading){
-            await initializeSocketAction(io(URL));
+            const Socket = await io(URL);
+            await initializeRoomAction(Socket , roomId);
+            await syncInitialStateAction(roomId);
             setLoading(false);
         };
         fetch(setLoading);
@@ -40,4 +41,4 @@ const mapStateToProps = (state)=>({
 
 })
 
-export default connect(mapStateToProps , {initializeSocketAction})(EditorComponent);
+export default connect(mapStateToProps , {initializeRoomAction , syncInitialStateAction})(EditorComponent);

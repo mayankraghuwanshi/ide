@@ -5,8 +5,13 @@ import {
     CHANGE_FONT,
     CHANGE_WIDTH,
     CHANGE_SHOW_GUTTER,
-    CHANGE_OPS_TO_DEFAULT, CHANGE_CODE, INITIALIZE_LIVE_MODE, INITIALIZE_SINGLE_MODE, INITIALIZE_SOCKET
-} from "../actionReducerConstants";
+    CHANGE_OPS_TO_DEFAULT,
+    CHANGE_CODE,
+    INITIALIZE_LIVE_MODE,
+    INITIALIZE_SINGLE_MODE,
+    INITIALIZE_SOCKET,
+    INITIALIZE_INITIAL_CODE, ERROR
+} from "../ReducerConstants";
 import io from 'socket.io-client'
 import axios from 'axios';
 const URL = "http://localhost:4000"
@@ -104,4 +109,31 @@ export const initializeSocketAction = (socket)=>dispatch=>{
 
 export const initializeNewRoomAction = ()=>dispatch=>{
 
+}
+
+
+export const syncInitialStateAction = (roomId)=>dispatch=>{
+    axios.post(URL+"/syncstate" , {roomId})
+        .then(response=>{
+            if((response.data.success!==null || response.data.success!==undefined) && response.data.success){
+                dispatch({
+                    type : INITIALIZE_INITIAL_CODE,
+                    payload : {
+                        language : response.data.data.language,
+                        code : response.data.data.code
+                    }
+                })
+            }else {
+                dispatch({
+                    type : ERROR,
+                    payload : response.data.data.error
+                })
+            }
+        })
+        .catch(error=>{
+            dispatch({
+                type : ERROR,
+                payload : error
+            })
+        })
 }

@@ -5,8 +5,8 @@ import {
     CHANGE_SHOW_GUTTER,
     CHANGE_STDIN,
     CHANGE_THEME,
-    CHANGE_OPS_TO_DEFAULT, EXECUTION_STATR, EXECUTION_STOP
-} from "../../actionReducerConstants";
+    CHANGE_OPS_TO_DEFAULT, EXECUTION_STATR, EXECUTION_STOP, INITIALIZE_INITIAL_CODE, ERROR
+} from "../../ReducerConstants";
 import {DEFAULT_LANGUAGE , DEFAULT_FONT_SIZE , DEFAULT_THEME} from "../../constants";
 
 const modes = {
@@ -14,7 +14,7 @@ const modes = {
         language : "java",
         code : `public class Solution{
     public static void main(String args[]){
-        System.out.println("Hello, World!");
+        System.out.println("Hello,");
     }
 }`
         ,
@@ -50,7 +50,8 @@ const initialState = {
     stdin : modes[DEFAULT_LANGUAGE].stdin,
     stdout : modes[DEFAULT_LANGUAGE].stdout,
     stderr : modes[DEFAULT_LANGUAGE].stderr,
-    isExecuting : false
+    isExecuting : false,
+    error : ""
 }
 
 export default (state = initialState , {type, payload})=>{
@@ -91,7 +92,15 @@ export default (state = initialState , {type, payload})=>{
             ...state,
             isExecuting: false
         }
-
+        case INITIALIZE_INITIAL_CODE : return {
+            ...state,
+            language : payload.language,
+            code : payload.code
+        }
+        case ERROR : return {
+            ...state,
+            error : payload
+        }
         case CHANGE_OPS_TO_DEFAULT : return initialState;
         default : return state
     }

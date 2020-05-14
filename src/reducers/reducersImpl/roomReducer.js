@@ -1,14 +1,14 @@
 import {
-    CHANGE_BROADCAST_MODE, INITIALIZE_LIVE_MODE, INITIALIZE_SINGLE_MODE,
+    CHANGE_BROADCAST_MODE,  INITIALIZE_ROOM,
     INITIALIZE_SOCKET, REMOVE_SOCKET,
     SET_ROOM,
-    SET_ROOM_WITH_BROADCAST
-} from "../../actionReducerConstants";
+    SET_ROOM_WITH_BROADCAST, SET_USER_NAME
+} from "../../ReducerConstants";
 
 const initialState = {
-    liveMode : true,
     roomId : null,
     socket : null,
+    userName : "",
 
 }
 
@@ -34,17 +34,14 @@ export default (state = initialState , {type , payload})=>{
             ...state,
             socket: null
         }
-        case INITIALIZE_LIVE_MODE : return {
+        case SET_USER_NAME : return {
             ...state,
-            roomId: payload.roomId,
-            socket : payload.socket,
-            liveMode: true
+            userName: payload
         }
-        case INITIALIZE_SINGLE_MODE : return {
+        case INITIALIZE_ROOM : return {
             ...state,
-            roomId: payload.roomId,
-            socket : null,
-            liveMode: false
+            socket: payload.socket,
+            roomId: payload.roomId
         }
         default : return state
     }

@@ -1,27 +1,31 @@
-import React, {useEffect} from "react";
+import React from "react";
 import Select from '../util/SelectComponent';
 import {connect} from "react-redux";
 import {changeThemeAction , changeFontAction ,changeShowGutterAction, changeOpsToDefaultAction} from "../../actions/editorAction"
 import {changeLanguageAction} from "../../actions/editorAction";
 import {Button} from "antd";
 import {PoweroffOutlined} from '@ant-design/icons';
-import { Input } from 'antd';
 import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
+import {setNameAction} from "../../actions/roomAction";
 
 const EditorNavComponent=(props)=>{
-    const {editor} = props;
+    const {editor , room} = props;
     const {
             changeThemeAction ,
             changeFontAction ,
             changeLanguageAction ,
             changeOpsToDefaultAction,
+            setNameAction,
+
           } = props;
-
-    useEffect(()=>{
-        // console.log(editor)
-    } , [editor])
-
+    const handleSetName=()=>{
+        let name = window.prompt("Enter your name.");
+        console.log(name);
+        if(name!==''){
+            setNameAction(name);
+        }
+    }
     return (
         <div style={{ height : "40px" , padding : "4px" , backgroundColor : "#dedede", boxShadow: "0px 1px 4px 0px black" , marginBottom : "10px"}}>
             <Select
@@ -62,14 +66,16 @@ const EditorNavComponent=(props)=>{
                 witdh : "auto",
                 float : "right"
             }}>
-                {/*<Input style={{width : "200px"}} placeholder="Enter your name" />*/}
-                {/*<Button*/}
-                {/*    type = "primary"*/}
-                {/*    style = {{backgroundColor : "green" ,border  : "none" , margin : "0 2px 0 2px"}}*/}
-                {/*>Add</Button>*/}
                 <div style={{display : "inline" , lineHeight : "30px", marginRight : "5px"}}>
-                    <Avatar style={{margin : "0 2px 0 2px"}} size={25} icon={<UserOutlined />} />
-                    <h4 style={{display : "inline"}}>Mayank Raghuvanshi</h4>
+                    {room.userName!=="" ?
+                        <div>
+                            <Avatar style={{margin : "0 2px 0 2px"}} size={25} icon={<UserOutlined />} />
+                            <h4 style={{display : "inline" , marginRight : "5px"}}>{room.userName}</h4>
+                        </div> :
+                        <Button onClick={handleSetName}>
+                            Login
+                        </Button>
+                    }
                 </div>
 
             </div>
@@ -170,7 +176,6 @@ const fontOptions = [
 
 const mapStateToProps = (state)=>({
     editor : state.editor,
-    socket : state.socket,
     room : state.room
 
 })
@@ -182,4 +187,5 @@ export default connect(mapStateToProps ,
         changeFontAction ,
         changeShowGutterAction ,
         changeOpsToDefaultAction,
+        setNameAction
     })(EditorNavComponent)
