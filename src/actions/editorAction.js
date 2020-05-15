@@ -7,14 +7,10 @@ import {
     CHANGE_SHOW_GUTTER,
     CHANGE_OPS_TO_DEFAULT,
     CHANGE_CODE,
-    INITIALIZE_LIVE_MODE,
-    INITIALIZE_SINGLE_MODE,
-    INITIALIZE_SOCKET,
-    INITIALIZE_INITIAL_CODE, ERROR
+    INITIALIZE_INITIAL_CODE, ERROR, EXECUTING_TRUE, EXECUTION_STATR, EXECUTION_STOP, EXECUTED_CODE
 } from "../ReducerConstants";
-import io from 'socket.io-client'
 import axios from 'axios';
-const URL = "http://localhost:4000"
+import {URL} from '../url';
 
 
 
@@ -76,41 +72,6 @@ export const changeEditorCodeAction = (code)=>dispatch=>{
 }
 
 
-export const initializeConnectionAction = (roomId)=>dispatch=>{
-    axios.get(URL+`/api/${roomId}`)
-        .then(response=>{
-            if(response.data && response.data!==undefined){
-                if(response.data.isLive){
-                    dispatch({
-                        type : INITIALIZE_LIVE_MODE,
-                        payload : {
-                            roomId : response.data.roomId,
-                            socket : io(URL)
-                        }
-                    })
-                }
-                else{
-                    dispatch({
-                        type : INITIALIZE_SINGLE_MODE,
-                        payload : roomId
-                    })
-                }
-            }
-        })
-        .catch(error=>console.error(error));
-}
-
-export const initializeSocketAction = (socket)=>dispatch=>{
-    dispatch({
-        type : INITIALIZE_SOCKET,
-        payload : socket
-    })
-}
-
-export const initializeNewRoomAction = ()=>dispatch=>{
-
-}
-
 
 export const syncInitialStateAction = (roomId)=>dispatch=>{
     axios.post(URL+"/syncstate" , {roomId})
@@ -136,4 +97,30 @@ export const syncInitialStateAction = (roomId)=>dispatch=>{
                 payload : error
             })
         })
+}
+
+export const startExecutingAction = ()=>dispatcher=>{
+    dispatcher({
+        type : EXECUTION_STATR,
+    })
+}
+
+export const stopExecutingAction = ()=>dispatcher=>{
+    console.log("stop executing...")
+    dispatcher({
+        type : EXECUTION_STOP,
+    })
+}
+
+export const executedResultAction =({
+    stdin , stdout , stderr
+})=>dispatch=>{
+    dispatch({
+        type : EXECUTED_CODE,
+        payload : {
+            stdin,
+            stderr,
+            stdout
+        }
+    })
 }

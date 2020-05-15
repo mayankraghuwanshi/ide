@@ -1,23 +1,31 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Select from '../util/SelectComponent';
 import {connect} from "react-redux";
-import {changeThemeAction , changeFontAction ,changeShowGutterAction, changeOpsToDefaultAction} from "../../actions/editorAction"
+import {
+    changeThemeAction,
+    changeFontAction,
+    changeShowGutterAction,
+    changeOpsToDefaultAction,
+    startExecutingAction
+} from "../../actions/editorAction"
 import {changeLanguageAction} from "../../actions/editorAction";
 import {Button} from "antd";
 import {PoweroffOutlined} from '@ant-design/icons';
 import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import {setNameAction} from "../../actions/roomAction";
+import {EXECUTE_CODE} from "../../socketConstants";
 
 const EditorNavComponent=(props)=>{
     const {editor , room} = props;
+    const socket = room.socket;
     const {
             changeThemeAction ,
             changeFontAction ,
             changeLanguageAction ,
             changeOpsToDefaultAction,
             setNameAction,
-
+            startExecutingAction
           } = props;
     const handleSetName=()=>{
         let name = window.prompt("Enter your name.");
@@ -26,6 +34,20 @@ const EditorNavComponent=(props)=>{
             setNameAction(name);
         }
     }
+
+    const handleExecuteOnClick = ()=>{
+        startExecutingAction();
+        let data = {
+            roomId : room.roomId,
+            code : editor.code,
+            language : editor.language,
+            userName : room.userName,
+            stdin : editor.stdin
+        }
+        socket.emit(EXECUTE_CODE , data);
+    }
+
+
     return (
         <div style={{ height : "40px" , padding : "4px" , backgroundColor : "#dedede", boxShadow: "0px 1px 4px 0px black" , marginBottom : "10px"}}>
             <Select
@@ -53,8 +75,8 @@ const EditorNavComponent=(props)=>{
                 type = "primary"
                 style = {{backgroundColor : "green" ,border  : "none" , margin : "0 2px 0 2px"}}
                 icon = {<PoweroffOutlined/>}
-                onClick = {()=>null}
-                loading = {false}
+                onClick = {handleExecuteOnClick}
+                loading = {editor.isExecuting}
             >Run</Button>
             <Button
                 type = "primary"
@@ -64,13 +86,15 @@ const EditorNavComponent=(props)=>{
             <div style={{
                 display : "inline",
                 witdh : "auto",
-                float : "right"
+                float : "right",
+                height : "40px"
+
             }}>
                 <div style={{display : "inline" , lineHeight : "30px", marginRight : "5px"}}>
                     {room.userName!=="" ?
-                        <div>
-                            <Avatar style={{margin : "0 2px 0 2px"}} size={25} icon={<UserOutlined />} />
-                            <h4 style={{display : "inline" , marginRight : "5px"}}>{room.userName}</h4>
+                        <div >
+                            <Avatar style={{margin : "0 5px 0 5px"}} size={25} icon={<UserOutlined />} />
+                            <h4 style={{display : "inline" , marginRight : "10px"}}>{room.userName}</h4>
                         </div> :
                         <Button onClick={handleSetName}>
                             Login
@@ -187,5 +211,7 @@ export default connect(mapStateToProps ,
         changeFontAction ,
         changeShowGutterAction ,
         changeOpsToDefaultAction,
-        setNameAction
+        setNameAction,
+        startExecutingAction
+
     })(EditorNavComponent)

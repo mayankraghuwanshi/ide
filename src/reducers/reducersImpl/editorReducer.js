@@ -5,7 +5,7 @@ import {
     CHANGE_SHOW_GUTTER,
     CHANGE_STDIN,
     CHANGE_THEME,
-    CHANGE_OPS_TO_DEFAULT, EXECUTION_STATR, EXECUTION_STOP, INITIALIZE_INITIAL_CODE, ERROR
+    CHANGE_OPS_TO_DEFAULT, EXECUTION_STATR, EXECUTION_STOP, INITIALIZE_INITIAL_CODE, ERROR, EXECUTED_CODE
 } from "../../ReducerConstants";
 import {DEFAULT_LANGUAGE , DEFAULT_FONT_SIZE , DEFAULT_THEME} from "../../constants";
 
@@ -100,6 +100,11 @@ export default (state = initialState , {type, payload})=>{
         case ERROR : return {
             ...state,
             error : payload
+        }
+        case EXECUTED_CODE : return {
+            ...state,
+            stdout: payload.stdout,
+            stderr : payload.stderr
         }
         case CHANGE_OPS_TO_DEFAULT : return initialState;
         default : return state

@@ -10,29 +10,57 @@ import 'ace-builds/src-noconflict/theme-solarized_dark';
 import 'ace-builds/src-noconflict/theme-solarized_light';
 
 import {connect} from 'react-redux';
-import {changeEditorCodeAction} from "../../actions/editorAction";
-import {PUSH_CODE_ON_CHANGE, PUSH_LANGUAGE_ON_CHANGE} from "../../socketConstants";
+import {
+    changeEditorCodeAction,
+    executedResultAction,
+    startExecutingAction,
+    stopExecutingAction
+} from "../../actions/editorAction";
+import {
+    EXECUTE_CODE, EXECUTE_CODE_START,
+    EXECUTED_CODE_RESULT,
+    PULL_CODE_ON_CHANGE,
+    PUSH_CODE_ON_CHANGE,
+} from "../../socketConstants";
 
 
 
 const EditorBodyComponent = (props) => {
     const {editor , room} = props;
     const socket = room.socket;
-    const {changeEditorCodeAction} = props;
+    const {changeEditorCodeAction,startExecutingAction , stopExecutingAction , executedResultAction} = props;
+
     useEffect(()=>{
-        socket.emit(PUSH_CODE_ON_CHANGE , {
-            roomId : room.roomId,
-            userName : room.userName,
-            code : editor.code
-        })
-        socket.emit(PUSH_LANGUAGE_ON_CHANGE , {
-            roomId : room.roomId,
-            userName : room.userName,
-            language : editor.language
+        socket.on(PULL_CODE_ON_CHANGE , (data)=>{
+            changeEditorCodeAction(data.code);
         })
 
-    },[editor.code , editor.language])
+        socket.on(EXECUTE_CODE_START , data=>{
+            startExecutingAction();
+        })
+        socket.on(EXECUTED_CODE_RESULT , data=>{
+            stopExecutingAction();
+            if(data.success!==undefined || data.success!==null){
+                executedResultAction({
+                    stdin : data.data.stdin,
+                    stdout : data.data.stdout,
+                    stderr : data.data.stderr
+                })
+            }
+        })
 
+    } , []);
+
+    const handleCodeOnChange = (code)=>{
+        changeEditorCodeAction(code);
+        let data = {
+            roomId : room.roomId,
+            userName : room.userName,
+            code : code,
+        }
+        socket.emit(PUSH_CODE_ON_CHANGE , data);
+
+    }
     return <div style={{margin : "2px" , width : "70%"}}>
             <AceEditor
             name = "defaultCode"
@@ -44,7 +72,7 @@ const EditorBodyComponent = (props) => {
             showGuttet ={editor.showGutter}
             placeholder = {editor.placeholder}
             value = {editor.code}
-            onChange={changeEditorCodeAction}
+            onChange={handleCodeOnChange}
             setOptions={{
                 enableBasicAutocompletion: true,
                 enableLiveAutocompletion: true,
@@ -65,6 +93,9 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps ,
     {
-        changeEditorCodeAction
+        changeEditorCodeAction,
+        startExecutingAction,
+        stopExecutingAction,
+        executedResultAction
     })
 (EditorBodyComponent)

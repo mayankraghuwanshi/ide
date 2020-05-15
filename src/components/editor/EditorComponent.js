@@ -9,7 +9,8 @@ import io from 'socket.io-client'
 import {connect} from "react-redux";
 import {syncInitialStateAction} from "../../actions/editorAction";
 import {initializeRoomAction} from "../../actions/roomAction";
-const URL = "http://localhost:4000"
+import {JOIN_GROUP} from "../../socketConstants";
+import {URL} from '../../url';
 
 const EditorComponent = (props) => {
     const [loading , setLoading] = useState(true);
@@ -21,6 +22,7 @@ const EditorComponent = (props) => {
             const Socket = await io(URL);
             await initializeRoomAction(Socket , roomId);
             await syncInitialStateAction(roomId);
+            Socket.emit(JOIN_GROUP , {roomId});
             setLoading(false);
         };
         fetch(setLoading);
