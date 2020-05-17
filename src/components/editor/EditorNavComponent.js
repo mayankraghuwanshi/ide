@@ -49,7 +49,7 @@ const EditorNavComponent=(props)=>{
 
 
     return (
-        <div style={{ height : "40px" , padding : "4px" , backgroundColor : "#dedede", boxShadow: "0px 1px 4px 0px black" , marginBottom : "10px"}}>
+        <div style={{ height : "40px" , padding : "4px" , backgroundColor : "#02203c", boxShadow: "0px 1px 4px 0px black" , marginBottom : "10px"}}>
             <Select
                 name = "theme"
                 options = {themeOptions}

@@ -8,5 +8,5 @@ body{
   background-color: aliceblue;
   margin : 0;
   padding : 0;
-
+  -webkit-animation:bounceIn 2s;
 }
